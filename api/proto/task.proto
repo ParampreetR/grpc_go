@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package task;
+
+option go_package = "github.com/parampreetr/grpc-go/proto";
+
+import "google/protobuf/empty.proto";
+
+message Task {
+    int64 id = 1;
+    string title = 2;
+    string desc = 3;
+    bool isDone = 4;
+}
+
+message CreateTaskRequest {
+    string title = 1;
+    string desc = 2;
+    bool isDone = 3;
+}
+
+message DeleteTaskRequest {
+    int64 id = 1;
+}
+
+message GetTaskRequest {
+    int64 id = 1;
+}
+
+
+message UpdateTaskRequest {
+    int64 id = 1;
+    string title = 2;
+    string desc = 3;
+    bool isDone = 4;
+}
+
+message ListTasksResponse {
+    repeated Task tasks = 1;
+}
+
+service TaskService {
+    rpc CreateTask(CreateTaskRequest) returns (Task);
+    rpc UpdateTask(UpdateTaskRequest) returns (Task);
+    rpc DeleteTask(DeleteTaskRequest) returns (Task);
+    rpc GetTask(GetTaskRequest) returns (Task);
+    rpc GetTasks(google.protobuf.Empty) returns (ListTasksResponse);
+}
